@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
