@@ -6,11 +6,12 @@ import TransactionList from "../components/TransactionList";
 import TransactionModal from "../components/TransactionModal";
 import TransactionFilters from "../components/TransactionFilters";
 
+import { Button } from "@/components/ui/button";
+
 export default function Transactions() {
   const [open, setOpen] = useState(false);
 
   const [filters, setFilters] = useState({
-    search: "",
     category: "all",
     type: "all",
     minAmount: "",
@@ -24,28 +25,28 @@ export default function Transactions() {
 
   return (
     <Layout>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Transactions</h1>
+      <div className="space-y-6">
 
-        {role === "admin" && (
-          <button
-            onClick={() => setOpen(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            + Add Transaction
-          </button>
-        )}
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl md:text-2xl font-semibold text-white">Transactions</h1>
+
+          {role === "admin" && (
+            <Button onClick={() => setOpen(true)}>
+              + Add Transaction
+            </Button>
+          )}
+        </div>
+
+        <TransactionFilters filters={filters} setFilters={setFilters} />
+
+        <TransactionList filters={filters} />
+
+        <TransactionModal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+        />
+
       </div>
-
-      <TransactionFilters filters={filters} setFilters={setFilters} />
-
-      <TransactionList filters={filters} />
-
-      {/* Add Modal */}
-      <TransactionModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-      />
     </Layout>
   );
 }

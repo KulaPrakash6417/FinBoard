@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
+import { Card, CardContent } from "@/components/ui/card";
+
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
 
 export default function CategoryChart() {
   const transactions = useSelector((state) => state.transactions);
-  const darkMode = useSelector((state) => state.ui.darkMode);
 
   const dataMap = {};
 
@@ -21,23 +22,34 @@ export default function CategoryChart() {
   }));
 
   return (
-    <div
-      className={`p-4 rounded-xl shadow ${
-        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-      }`}
-    >
-      <h3 className="mb-4 font-bold">Spending Breakdown</h3>
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl">
+      <CardContent className="p-5">
+        <h3 className="text-sm text-gray-400 mb-4">Spending Breakdown</h3>
 
-      <ResponsiveContainer width="100%" height={250}>
-        <PieChart>
-          <Pie data={data} dataKey="value" outerRadius={80}>
-            {data.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+        <ResponsiveContainer width="100%" height={200} className="h-[200px] md:h-[260px]">
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="value"
+              outerRadius={90}
+              innerRadius={50}
+              paddingAngle={3}
+            >
+              {data.map((_, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#020617",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "8px",
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 }

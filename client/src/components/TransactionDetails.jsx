@@ -1,28 +1,49 @@
 import { useSelector } from "react-redux";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function TransactionDetails({ txn, onClose }) {
-  const darkMode = useSelector((state) => state.ui.darkMode);
-
+  const currency = useSelector((state) => state.ui.currency);
   if (!txn) return null;
 
   return (
-    <div className={`fixed right-0 top-0 h-full w-80 shadow-lg p-4 ${
-      darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-    }`}>
-      <h2 className="text-xl font-bold mb-4">Details</h2>
+    <div className="fixed inset-0 flex justify-end bg-black/40 z-50">
+      <div className="w-96 h-full bg-[#020617] border-l border-white/10 p-6 shadow-2xl">
 
-      <p><strong>Title:</strong> {txn.title}</p>
-      <p><strong>Amount:</strong> ₹{txn.amount}</p>
-      <p><strong>Type:</strong> {txn.type}</p>
-      <p><strong>Category:</strong> {txn.category}</p>
-      <p><strong>Date:</strong> {txn.date}</p>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg font-semibold text-white">Transaction Details</h2>
+          <Button variant="ghost" onClick={onClose}>
+            <X />
+          </Button>
+        </div>
 
-      <button
-        onClick={onClose}
-        className="mt-4 bg-gray-300 px-4 py-2 rounded"
-      >
-        Close
-      </button>
+        <div className="space-y-4 text-sm text-gray-300">
+          <div>
+            <p className="text-gray-500">Title</p>
+            <p className="font-medium text-white">{txn.title}</p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Amount</p>
+            <p className="font-medium text-white">{currency}{txn.amount.toLocaleString()}</p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Type</p>
+            <p className="font-medium capitalize">{txn.type}</p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Category</p>
+            <p className="font-medium">{txn.category}</p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Date</p>
+            <p className="font-medium">{txn.date}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

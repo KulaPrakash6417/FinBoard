@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function InsightsCards() {
   const transactions = useSelector((state) => state.transactions);
-  const darkMode = useSelector((state) => state.ui.darkMode);
+  const currency = useSelector((state) => state.ui.currency);
 
   const expenses = transactions.filter((t) => t.type === "expense");
 
@@ -26,39 +27,47 @@ export default function InsightsCards() {
   const savings = income - expense;
 
   const avg = transactions.length
-    ? (transactions.reduce((a, t) => a + t.amount, 0) / transactions.length).toFixed(0)
+    ? (
+        transactions.reduce((a, t) => a + t.amount, 0) /
+        transactions.length
+      ).toFixed(0)
     : 0;
 
   const highestTxn = transactions.length
     ? transactions.reduce((max, t) => (t.amount > max.amount ? t : max))
     : { amount: 0, title: "N/A" };
 
-  const cardStyle = `p-4 rounded-xl shadow ${
-    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-  }`;
+  const cards = [
+    { title: "Top Category", value: highestCategory },
+    { title: "Net Savings", value: `${currency}${savings.toLocaleString()}`, color: "text-green-400" },
+    { title: "Avg Transaction", value: `${currency}${avg}` },
+    {
+      title: "Highest Transaction",
+      value: `${currency}${highestTxn.amount.toLocaleString()}`,
+      sub: highestTxn.title,
+    },
+  ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <div className={cardStyle}>
-        <h3 className="text-gray-500">Top Category</h3>
-        <p className="text-xl font-bold">{highestCategory}</p>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {cards.map((card, index) => (
+        <Card
+          key={index}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+        >
+          <CardContent className="p-4 md:p-6">
+            <p className="text-xs md:text-sm text-gray-400">{card.title}</p>
 
-      <div className={cardStyle}>
-        <h3 className="text-gray-500">Net Savings</h3>
-        <p className="text-xl font-bold text-green-500">₹{savings}</p>
-      </div>
+            <h2 className={`text-lg md:text-2xl font-semibold mt-2 ${card.color || "text-white"}`}>
+              {card.value}
+            </h2>
 
-      <div className={cardStyle}>
-        <h3 className="text-gray-500">Avg Transaction</h3>
-        <p className="text-xl font-bold">₹{avg}</p>
-      </div>
-
-      <div className={cardStyle}>
-        <h3 className="text-gray-500">Highest Transaction</h3>
-        <p className="text-xl font-bold">₹{highestTxn.amount}</p>
-        <p className="text-sm text-gray-400">{highestTxn.title}</p>
-      </div>
+            {card.sub && (
+              <p className="text-xs md:text-sm text-gray-500 mt-1">{card.sub}</p>
+            )}
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 }

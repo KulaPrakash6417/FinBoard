@@ -4,19 +4,23 @@ import CategoryChart from "../components/CategoryChart";
 import InsightsCards from "../components/InsightsCards";
 import SummaryCards from "../components/SummaryCards";
 
-export default function Insights() {
+export default function InsightsPage() {
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-6">Insights</h1>
+      <div className="space-y-6">
 
-      <InsightsCards />
+        <h1 className="text-xl md:text-2xl font-semibold text-white">Insights</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 mb-4">
-        <MonthlyChart />
-        <CategoryChart />
+        <InsightsCards />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <MonthlyChart />
+          <CategoryChart />
+        </div>
+
+        <SummaryCards />
+
       </div>
-
-      <SummaryCards />
     </Layout>
   );
 }

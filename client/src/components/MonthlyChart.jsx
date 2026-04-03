@@ -8,9 +8,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { Card, CardContent } from "@/components/ui/card";
+
 export default function MonthlyChart() {
   const transactions = useSelector((state) => state.transactions);
-  const darkMode = useSelector((state) => state.ui.darkMode);
 
   const dataMap = {};
 
@@ -31,20 +32,28 @@ export default function MonthlyChart() {
   const data = Object.values(dataMap);
 
   return (
-    <div className={`p-4 rounded-xl shadow ${
-      darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-    }`}>
-      <h3 className="mb-4 font-bold">Monthly Comparison</h3>
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl">
+      <CardContent className="p-5">
+        <h3 className="text-sm text-gray-400 mb-4">Monthly Comparison</h3>
 
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={data}>
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="income" fill="#10b981" />
-          <Bar dataKey="expense" fill="#ef4444" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+        <ResponsiveContainer width="100%" height={200} className="h-[200px] md:h-[260px]">
+          <BarChart data={data}>
+            <XAxis dataKey="month" stroke="#9ca3af" />
+            <YAxis stroke="#9ca3af" />
+
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#020617",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "8px",
+              }}
+            />
+
+            <Bar dataKey="income" fill="#10b981" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="expense" fill="#ef4444" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 }

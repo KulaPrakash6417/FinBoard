@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { LayoutDashboard, Receipt, BarChart3, Settings } from "lucide-react";
 
 const navItems = [
@@ -11,14 +10,15 @@ const navItems = [
 
 export default function Sidebar() {
   const location = useLocation();
-  const darkMode = useSelector((state) => state.ui.darkMode);
 
   return (
-    <div className={`w-64 shadow-md p-4 ${
-      darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
-    }`}>
-      <h1 className="text-2xl font-bold mb-8">FinBoard</h1>
+    <div className="w-16 md:w-64 bg-gradient-to-b from-[#020617] to-[#0f172a] border-r border-white/10 p-2 md:p-4 transition-all duration-300">
+      
+      {/* Logo */}
+      <h1 className="text-lg md:text-2xl font-bold mb-4 md:mb-8 text-white hidden md:block">FinBoard</h1>
+      <h1 className="text-lg font-bold mb-4 text-white md:hidden">FB</h1>
 
+      {/* Navigation */}
       <nav className="space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -28,16 +28,15 @@ export default function Sidebar() {
             <Link
               key={item.name}
               to={item.path}
-              className={`flex items-center gap-3 p-3 rounded-lg transition ${
+              className={`flex items-center gap-3 p-2 md:p-3 rounded-lg transition-all duration-200 ${
                 isActive
-                  ? "bg-blue-500 text-white"
-                  : darkMode
-                  ? "text-gray-300 hover:bg-gray-700"
-                  : "text-gray-700 hover:bg-gray-200"
+                  ? "bg-blue-500/20 text-blue-400"
+                  : "text-gray-400 hover:bg-white/5 hover:text-white"
               }`}
+              title={item.name} // Tooltip for mobile
             >
               <Icon size={20} />
-              {item.name}
+              <span className="hidden md:inline">{item.name}</span>
             </Link>
           );
         })}

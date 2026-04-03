@@ -1,95 +1,116 @@
 import { useSelector } from "react-redux";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function TransactionFilters({ filters, setFilters }) {
-    const darkMode = useSelector((state) => state.ui.darkMode);
+  const transactions = useSelector((state) => state.transactions);
 
-    const handleChange = (key, value) => {
-        setFilters((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
-    };
+  // Get unique categories from transactions
+  const categories = [...new Set(transactions.map(t => t.category))];
 
-    return (
-        <div className={`p-4 rounded-xl shadow mb-4 grid grid-cols-2 md:grid-cols-3 gap-4 ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-            }`}>
-            <input type="date" className={`p-2 border rounded ${darkMode
-                ? "bg-gray-700 text-white"
-                : "bg-white text-black"
-                }`}
-                value={filters.startDate || ""}
-                onChange={(e) => handleChange("startDate", e.target.value)}
+  const updateFilter = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  return (
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+      <CardContent className="p-5">
+        <h3 className="text-base md:text-lg font-semibold text-white mb-4">Filters</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Category Filter */}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Category</label>
+            <Select value={filters.category} onValueChange={(value) => updateFilter('category', value)}>
+              <SelectTrigger className="w-full text-white">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border border-white/10">
+                <SelectItem value="all" className="text-white hover:bg-gray-700 focus:bg-gray-700">All Categories</SelectItem>
+                {categories.map(cat => (
+                  <SelectItem key={cat} value={cat} className="text-white hover:bg-gray-700 focus:bg-gray-700">{cat}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Type Filter */}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Type</label>
+            <Select value={filters.type} onValueChange={(value) => updateFilter('type', value)}>
+              <SelectTrigger className="w-full text-white">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border border-white/10">
+                <SelectItem value="all" className="text-white hover:bg-gray-700 focus:bg-gray-700">All Types</SelectItem>
+                <SelectItem value="income" className="text-white hover:bg-gray-700 focus:bg-gray-700">Income</SelectItem>
+                <SelectItem value="expense" className="text-white hover:bg-gray-700 focus:bg-gray-700">Expense</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Amount Range */}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Min Amount</label>
+            <Input
+              type="number"
+              placeholder="0"
+              value={filters.minAmount}
+              onChange={(e) => updateFilter('minAmount', e.target.value)}
+              className="text-white placeholder:text-gray-400"
             />
+          </div>
 
-            <input type="date" className={`p-2 border rounded ${darkMode
-                ? "bg-gray-700 text-white"
-                : "bg-white text-black"
-                }`}
-                value={filters.endDate || ""}
-                onChange={(e) => handleChange("endDate", e.target.value)}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Max Amount</label>
+            <Input
+              type="number"
+              placeholder="10000"
+              value={filters.maxAmount}
+              onChange={(e) => updateFilter('maxAmount', e.target.value)}
+              className="text-white placeholder:text-gray-400"
             />
+          </div>
 
-            <select
-                className={`p-2 border rounded ${darkMode
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-black"
-                    }`}
-                value={filters.category}
-                onChange={(e) => handleChange("category", e.target.value)}
-            >
-                <option value="all">All Categories</option>
-                <option>Food</option>
-                <option>Travel</option>
-                <option>Entertainment</option>
-                <option>Bills</option>
-                <option>Medical</option>
-                <option>Education</option>
-                <option>Amenities</option>
-                <option>Salary</option>
-            </select>
+          {/* Sort */}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Sort By</label>
+            <Select value={filters.sort} onValueChange={(value) => updateFilter('sort', value)}>
+              <SelectTrigger className="w-full text-white">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border border-white/10">
+                <SelectItem value="newest" className="text-white hover:bg-gray-700 focus:bg-gray-700">Newest First</SelectItem>
+                <SelectItem value="oldest" className="text-white hover:bg-gray-700 focus:bg-gray-700">Oldest First</SelectItem>
+                <SelectItem value="highest" className="text-white hover:bg-gray-700 focus:bg-gray-700">Highest Amount</SelectItem>
+                <SelectItem value="lowest" className="text-white hover:bg-gray-700 focus:bg-gray-700">Lowest Amount</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-            <select
-                className={`p-2 border rounded ${darkMode
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-black"
-                    }`}
-                value={filters.type}
-                onChange={(e) => handleChange("type", e.target.value)}
-            >
-                <option value="all">All Types</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-            </select>
-
-            <input type="number" placeholder="Min Amount" className={`p-2 border rounded ${darkMode
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-black"
-                }`}
-                value={filters.minAmount}
-                onChange={(e) => handleChange("minAmount", e.target.value)}
+          {/* Date Range */}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Start Date</label>
+            <Input
+              type="date"
+              value={filters.startDate}
+              onChange={(e) => updateFilter('startDate', e.target.value)}
+              className="text-white"
             />
+          </div>
 
-            <input type="number" placeholder="Max Amount" className={`p-2 border rounded ${darkMode
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-black"
-                }`}
-                value={filters.maxAmount}
-                onChange={(e) => handleChange("maxAmount", e.target.value)}
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">End Date</label>
+            <Input
+              type="date"
+              value={filters.endDate}
+              onChange={(e) => updateFilter('endDate', e.target.value)}
+              className="text-white"
             />
-
-            <select
-                className={`p-2 border rounded ${darkMode
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-black"
-                    }`}
-                value={filters.sort}
-                onChange={(e) => handleChange("sort", e.target.value)}
-            >
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-                <option value="highest">Highest</option>
-                <option value="lowest">Lowest</option>
-            </select>
+          </div>
         </div>
-    );
+      </CardContent>
+    </Card>
+  );
 }

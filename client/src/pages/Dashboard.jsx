@@ -8,19 +8,21 @@ import Insights from "../components/Insights";
 export default function Dashboard() {
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <div className="space-y-6">
 
-      <SummaryCards />
+        <h1 className="text-xl md:text-2xl font-semibold text-white">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <BalanceChart />
-        <CategoryChart />
-      </div>
+        <SummaryCards />
 
-      <MonthlyChart />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <BalanceChart />
+          <CategoryChart />
+        </div>
 
-      <div className="mt-6">
+        <MonthlyChart />
+
         <Insights />
+
       </div>
     </Layout>
   );
