@@ -31,13 +31,13 @@ A modern, responsive personal finance management application built with React, R
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- npm or yarn
+- npm
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/KulaPrakash6417/FinBoard/
    cd FinBoard
    ```
 
@@ -61,29 +61,29 @@ A modern, responsive personal finance management application built with React, R
 client/
 ├── src/
 │   ├── app/
-│   │   └── store.js              # Redux store configuration
+│   │   └── store.js               # Redux store configuration
 │   ├── components/
-│   │   ├── ui/                   # Reusable UI components (shadcn/ui)
-│   │   ├── BalanceChart.jsx      # Balance trend visualization
-│   │   ├── CategoryChart.jsx     # Spending breakdown pie chart
-│   │   ├── MonthlyChart.jsx      # Monthly income/expense comparison
-│   │   ├── SummaryCards.jsx      # Financial summary cards
-│   │   ├── TransactionList.jsx   # Transaction table with actions
+│   │   ├── ui/                    # Reusable UI components (shadcn/ui)
+│   │   ├── BalanceChart.jsx       # Balance trend visualization
+│   │   ├── CategoryChart.jsx      # Spending breakdown pie chart
+│   │   ├── MonthlyChart.jsx       # Monthly income/expense comparison
+│   │   ├── SummaryCards.jsx       # Financial summary cards
+│   │   ├── TransactionList.jsx    # Transaction table with actions
 │   │   ├── TransactionFilters.jsx # Advanced filtering component
-│   │   └── Layout.jsx            # Main layout with sidebar
+│   │   └── Layout.jsx             # Main layout with sidebar
 │   ├── features/
-│   │   ├── transactionsSlice.js  # Transaction state management
-│   │   ├── uiSlice.js           # UI state (currency, etc.)
-│   │   └── roleSlice.js         # User role management
+│   │   ├── transactionsSlice.js   # Transaction state management
+│   │   ├── uiSlice.js             # UI state (currency, etc.)
+│   │   └── roleSlice.js           # User role management
 │   ├── pages/
-│   │   ├── Dashboard.jsx        # Main dashboard page
-│   │   ├── Transactions.jsx     # Transaction management page
-│   │   ├── Insights.jsx         # Analytics and insights page
-│   │   └── Settings.jsx         # Application settings
+│   │   ├── Dashboard.jsx          # Main dashboard page
+│   │   ├── Transactions.jsx       # Transaction management page
+│   │   ├── Insights.jsx           # Analytics and insights page
+│   │   └── Settings.jsx           # Application settings
 │   ├── utils/
-│   │   └── exportUtils.js       # Data export functionality
+│   │   └── exportUtils.js         # Data export functionality
 │   └── data/
-│       └── seedData.js          # Sample transaction data
+│       └── seedData.js            # Sample transaction data
 ```
 
 ## 🎯 Key Features Explained
@@ -122,6 +122,7 @@ client/
 - View-only access to dashboard and transactions
 - Cannot modify transaction data
 - Limited to viewing insights and analytics
+- Can export data but cannot import data
 
 ## 📱 Responsive Design
 
@@ -167,12 +168,6 @@ The application is fully responsive with optimized layouts for:
 
 ## 🧪 Development
 
-### Available Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
 ### Code Quality
 - **ESLint**: Code linting and formatting
 - **Prettier**: Consistent code formatting
@@ -180,20 +175,16 @@ The application is fully responsive with optimized layouts for:
 
 ## 🤝 Contributing
 
+Feel free to make any contributions. I will be happy to interact with you and take up any new and good suggestions.
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
 4. Run tests and linting
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ## 🙏 Acknowledgments
 
 - Built with [shadcn/ui](https://ui.shadcn.com/) for beautiful components
 - Charts powered by [Recharts](https://recharts.org/)
 - Icons from [Lucide React](https://lucide.dev/)
-- State management with [Redux Toolkit](https://redux-toolkit.js.org/)</content>
-<parameter name="filePath">README.md
+- State management with [Redux Toolkit](https://redux-toolkit.js.org/)
